@@ -158,8 +158,9 @@ aftertitle = \par\bigskip\nointerlineskip\rule{\linewidth}{2bp}\par
 %---------tasks--------
 \RequirePackage{tasks}
 \settasks{after-item-skip=0.5ex plus 0.5ex minus 1ex}
-\NewTasksEnvironment[label={(\arabic*)}, item-indent=4em, label-offset=1em]{exer}[\item](2)
-\NewTasksEnvironment[label={(\arabic*)}, item-indent=4em, label-offset=1em]{exer3}[\item](3)
+\NewTasksEnvironment[label=(\arabic*), item-indent=3.3333em]{mathtasks}[\item]
+\NewTasksEnvironment[label=(\arabic*), item-indent=3.3333em]{mathtasks2}[\item](2)
+\NewTasksEnvironment[label=(\arabic*), item-indent=3.3333em]{mathtasks3}[\item](3)
 
 % hyperref
 \RequirePackage{hyperref}
