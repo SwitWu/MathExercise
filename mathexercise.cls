@@ -6,14 +6,24 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{mathexercise}[2021/09/24 class file to write mathematical exercise solutions]
 
-% 加载常用宏包
+%%% 选项设置
+%%% Settle withinchap and withinsec options
+\DeclareOption{withinchap}{\def\exercounter@within{chapter}}
+\DeclareOption{withinsec}{\def\exercounter@within{section}}
+
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
+
+
+\ExecuteOptions{withinchap}
+\ProcessOptions\relax
+\LoadClass{report} % should go after processing options
+
+\RequirePackage[shortlabels]{enumitem}
 \RequirePackage{amsmath}
 \RequirePackage{amssymb}
 \RequirePackage{amsthm}
 \RequirePackage{extarrows}
 \RequirePackage{xcolor}
-\RequirePackage[heading=true]{ctex}
-\RequirePackage[shortlabels]{enumitem}
 \RequirePackage{tcolorbox}
 \RequirePackage[width=14cm]{geometry}
 \RequirePackage{tikz}
@@ -26,6 +36,7 @@
 \definecolor{c4}{RGB}{100, 172, 174}
 \definecolor{c5}{RGB}{95, 162, 162}
 % 章标题定制
+\RequirePackage[heading=true]{ctex}
 \ctexset {
 chapter = {
 beforeskip = 0pt,
@@ -39,11 +50,8 @@ aftertitle = \par\bigskip\nointerlineskip\rule{\linewidth}{2bp}\par
 }
 \newcommand\chapternamebox[1]{%
 \parbox{\ccwd}{\linespread{1}\selectfont\centering #1}}
-
-
 % 中文设置
 \setCJKmainfont[BoldFont=FandolHei,ItalicFont=FandolKai]{FandolSong}
-
 
 %%% 定义常用命令
 % Roman Font
@@ -136,24 +144,22 @@ aftertitle = \par\bigskip\nointerlineskip\rule{\linewidth}{2bp}\par
 \setlist{nosep,left=\parindent}
 
 
-%%% Settle withinchap and withinsec options
-\DeclareOption{withinchap}{\def\exercounter@within{chapter}}
-\DeclareOption{withinsec}{\def\exercounter@within{section}}
-
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
-
-
-\ExecuteOptions{withinchap}
-\ProcessOptions\relax
-\LoadClass{report}
-
-
 \newcounter{exercounter}
-\counterwithin{exercounter}{\exercounter@within}
+\counterwithin*{exercounter}{\exercounter@within}
 
-\newenvironment{exercise}%
-               {\refstepcounter{exercounter}\par\textbf{\theexercounter.}}%
-			   {\par\ignorespacesafterend}
+% \newenvironment{exercise}[1]%
+%                {\refstepcounter{exercounter}\par\textbf{\theexercounter.}}%
+% 			   {\par\ignorespacesafterend}
+\NewDocumentEnvironment{exercise}{o +b}
+  {%
+    \IfNoValueTF{#1}
+      {\stepcounter{exercounter}}
+      {\setcounter{exercounter}{#1}}
+    \par\textbf{\theexercounter.}%
+    #2
+  }
+  {\ignorespacesafterend}
+
 
 %---------tasks--------
 \RequirePackage{tasks}
