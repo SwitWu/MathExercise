@@ -19,7 +19,7 @@
 \LoadClass{report} % should go after processing options
 
 \RequirePackage[shortlabels]{enumitem}
-\RequirePackage{amsmath}
+\RequirePackage{mathtools}
 \RequirePackage{amssymb}
 \RequirePackage{amsthm}
 \RequirePackage{extarrows}
@@ -90,10 +90,13 @@ aftertitle = \par\bigskip\nointerlineskip\rule{\linewidth}{2bp}\par
 \newcommand{\closure}[1]{\overline{#1}} % the closure of a set
 \newcommand{\almosteverywhere}{\;\mathrm{a.e.}}
 \newcommand{\diag}{\mathrm{diag}}
-\newcommand{\innerp}[2]{\langle#1,#2\rangle}
+% \newcommand{\innerp}[2]{\langle#1,#2\rangle}
 \newcommand{\conjugate}[1]{\overline{#1}}
 \newcommand{\cont}[1]{\mathrm{Cont}(#1)}
 \newcommand{\id}{\mathrm{id}}
+% tricks from mathtools
+\DeclarePairedDelimiterX{\innerp}[2]{\langle}{\rangle}{#1,#2}
+\DeclarePairedDelimiterX{\norm}[1]{\lVert}{\rVert}{#1}
 
 % textbook name
 \newcommand{\textbook}[1]{\gdef\@textbook{#1}}
