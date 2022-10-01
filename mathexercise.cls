@@ -6,10 +6,17 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{mathexercise}[2021/09/24 class file to write mathematical exercise solutions]
 
+\newif\if@chinesesupport
+\@chinesesupportfalse
+
 %%% 选项设置
-%%% Settle withinchap and withinsec options
+
+% Settle withinchap and withinsec options
 \DeclareOption{withinchap}{\def\exercounter@within{chapter}}
 \DeclareOption{withinsec}{\def\exercounter@within{section}}
+
+% 是否提供中文支持
+\DeclareOption{chinese}{\@chinesesupporttrue}
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
 
@@ -18,6 +25,8 @@
 \ProcessOptions\relax
 \LoadClass{report} % should go after processing options
 
+%%% 加载所需宏包
+\RequirePackage{indentfirst}
 \RequirePackage[shortlabels]{enumitem}
 \RequirePackage{mathtools}
 \RequirePackage{amssymb}
@@ -35,34 +44,59 @@
 \definecolor{c3}{RGB}{107, 190, 190}
 \definecolor{c4}{RGB}{100, 172, 174}
 \definecolor{c5}{RGB}{95, 162, 162}
-% 章标题定制
-\RequirePackage[heading=true]{ctex}
-\ctexset {
-chapter = {
-beforeskip = 0pt,
-fixskip = true,
-format = \Huge\bfseries,
-nameformat = \rule{\linewidth}{1bp}\par\bigskip\hfill\chapternamebox,
-number = \arabic{chapter},
-aftername = \par\medskip,
-aftertitle = \par\bigskip\nointerlineskip\rule{\linewidth}{2bp}\par
-}
-}
-\newcommand\chapternamebox[1]{%
-\parbox{\ccwd}{\linespread{1}\selectfont\centering #1}}
-% 中文设置
-\setCJKmainfont[BoldFont=FandolHei,ItalicFont=FandolKai]{FandolSong}
 
-%%% 定义常用命令
+\if@chinesesupport
+  \RequirePackage[heading=true]{ctex}
+  \ctexset {
+    chapter = {
+      beforeskip = 0pt,
+      fixskip = true,
+      format = \Huge\bfseries,
+      nameformat = \rule{\linewidth}{1bp}\par\bigskip\hfill\chapternamebox,
+      number = \arabic{chapter},
+      aftername = \par\medskip,
+      aftertitle = \par\bigskip\nointerlineskip\rule{\linewidth}{2bp}\par
+  }
+  }
+  \newcommand\chapternamebox[1]{%
+  \parbox{\ccwd}{\linespread{1}\selectfont\centering #1}}
+  \newcommand{\solutionname}{解}
+  %theorem environment
+  \newtheoremstyle{mytheorem}{3pt}{3pt}{\rmfamily}{\parindent}{\bfseries}{}%
+    {.5em}{\thmname{#1}\thmnumber{#2}\thmnote{(#3)}}
+  \theoremstyle{mytheorem}\newtheorem{theorem}{定理}
+  \theoremstyle{mytheorem}\newtheorem{lemma}{引理}
+  \theoremstyle{mytheorem}\newtheorem{example}{例}
+  \theoremstyle{mytheorem}\newtheorem*{remark}{注}
+  \theoremstyle{mytheorem}\newtheorem*{corollary}{推论}
+  \newcommand{\authorname}{作者}
+  \newcommand{\textbookname}{教材}
+\else
+  \newcommand{\solutionname}{Solution}
+  \newtheoremstyle{mytheorem}{3pt}{3pt}{\rmfamily}{\parindent}{\bfseries}{}%
+    {.5em}{\thmname{#1}\thmnumber{#2}\thmnote{(#3)}}
+  \theoremstyle{mytheorem}\newtheorem{theorem}{Theorem}
+  \theoremstyle{mytheorem}\newtheorem{lemma}{Lemma}
+  \theoremstyle{mytheorem}\newtheorem{example}{Example}
+  \theoremstyle{mytheorem}\newtheorem*{remark}{Remark}
+  \theoremstyle{mytheorem}\newtheorem*{corollary}{Corollary}
+  \newcommand{\authorname}{Author}
+  \newcommand{\textbookname}{Textbook}
+\fi
+
+%%% 定义常用数学命令
+
 % Roman Font
 \newcommand{\e}{\mathrm{e}}
 \newcommand{\T}{\mathrm{T}}
-\newcommand{\ii}{\mathrm{i}}
+\newcommand{\upi}{\mathrm{i}}
+\newcommand{\id}{\mathrm{id}}
 % Differential Operator(在多种实现方法之中，个人认为此方法最佳)
 \newcommand{\diff}{\mathop{}\!\mathrm{d}}
 % Declare Math Operator
 \DeclareMathOperator{\codim}{codim}
 \DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\diag}{diag}
 \DeclareMathOperator{\diam}{diam} % diameter
 \DeclareMathOperator{\dist}{dist}
 \DeclareMathOperator{\rank}{rank}
@@ -74,27 +108,11 @@ aftertitle = \par\bigskip\nointerlineskip\rule{\linewidth}{2bp}\par
 % Real and Imaginary part of complex numbers
 \renewcommand{\Re}{\operatorname{Re}}
 \renewcommand{\Im}{\operatorname{Im}}
-% Number set
-\newcommand\FR{\mathbb{R}}
-\newcommand\FC{\mathbb{C}}
-\newcommand\FK{\mathbb{K}}
-\newcommand\FN{\mathbb{N}}
-\newcommand\FZ{\mathbb{Z}}
-\newcommand{\FQ}{\mathbb{Q}}
 
-\newcommand\Rn{\mathbb{R}^n}
-\newcommand{\lrangle}[2]{\langle#1,#2\rangle}
-\newcommand{\generatedgroup}[1]{\langle#1\rangle} % generated group by a set, used in algebra
-\newcommand{\sufficient}{($\Leftarrow$)} % sufficient condition
-\newcommand{\necessary}{($\Rightarrow$)} % necessary condition
 \newcommand{\closure}[1]{\overline{#1}} % the closure of a set
-\newcommand{\almosteverywhere}{\;\mathrm{a.e.}}
-\newcommand{\diag}{\mathrm{diag}}
-% \newcommand{\innerp}[2]{\langle#1,#2\rangle}
 \newcommand{\conjugate}[1]{\overline{#1}}
-\newcommand{\cont}[1]{\mathrm{Cont}(#1)}
-\newcommand{\id}{\mathrm{id}}
 % tricks from mathtools
+\DeclarePairedDelimiterX{\lrangle}[1]{\langle}{\rangle}{#1}
 \DeclarePairedDelimiterX{\innerp}[2]{\langle}{\rangle}{#1,#2}
 \DeclarePairedDelimiterX{\norm}[1]{\lVert}{\rVert}{#1}
 
@@ -104,7 +122,7 @@ aftertitle = \par\bigskip\nointerlineskip\rule{\linewidth}{2bp}\par
 \newcommand{\textbookversion}[1]{\gdef\@textbookversion{#1}}
 
 %proof environment and solve environment
-% \makeatletter    .cls 和 .sty 文件中无需使用 \makeatletter \makeatother
+
 \renewenvironment{proof}[1][\proofname]{\par
 	\pushQED{\qed}%
 	\normalfont\topsep1\p@\@plus6\p@\relax
@@ -114,34 +132,18 @@ aftertitle = \par\bigskip\nointerlineskip\rule{\linewidth}{2bp}\par
 }{%
 	\popQED\endtrivlist\@endpefalse
 }
-% \makeatother
 
-% \makeatletter
-\newenvironment{solve}{\par
+\newenvironment{solution}[1][\solutionname]{\par
 	\pushQED{\qed}%
 	\normalfont\topsep1\p@\@plus6\p@\relax
 	\trivlist
 	\item\relax
-	{\hspace*{\parindent}{\heiti 解}\@addpunct{:}}\hspace\labelsep\ignorespaces
+	{\hspace*{\parindent}\textbf{#1}\@addpunct{:}}\hspace\labelsep\ignorespaces
 }{%
 	\popQED\endtrivlist\@endpefalse
 }
-% \makeatother
 
-%theorem environment
-\newtheoremstyle{mytheorem}
-                {3pt}
-				{3pt}
-				{\rmfamily}
-				{\parindent}
-				{\bfseries}
-				{}
-				{.5em}{\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}
-\theoremstyle{mytheorem}\newtheorem{theorem}{定理}
-\theoremstyle{mytheorem}\newtheorem{lemma}{引理}
-\theoremstyle{mytheorem}\newtheorem{example}{例}
-\theoremstyle{mytheorem}\newtheorem*{remark}{注}
-\theoremstyle{mytheorem}\newtheorem*{corollary}{推论}
+
 
 % 定制列表
 \setlist{nosep,left=\parindent}
@@ -153,7 +155,7 @@ aftertitle = \par\bigskip\nointerlineskip\rule{\linewidth}{2bp}\par
 % \newenvironment{exercise}[1]%
 %                {\refstepcounter{exercounter}\par\textbf{\theexercounter.}}%
 % 			   {\par\ignorespacesafterend}
-\NewDocumentEnvironment{exercise}{o d() +b}
+\NewDocumentEnvironment{exercise}{o d<> +b}
   {%
     \IfNoValueTF{#1}
       {\stepcounter{exercounter}}
@@ -236,9 +238,9 @@ aftertitle = \par\bigskip\nointerlineskip\rule{\linewidth}{2bp}\par
 	\node[text=white,anchor=west,scale=3,inner sep=0pt] at
 	([xshift=-9.5cm,yshift=-3.25cm]current page.center) {\@title};
 	\node[text=white,anchor=west,scale=1.5,inner sep=0pt] at
-	([xshift=-8.5cm,yshift=-5cm]current page.center) {作者: \@author};
+	([xshift=-8.5cm,yshift=-5cm]current page.center) {\authorname\ \@author};
 	\node[text=white,anchor=west,scale=1.5,inner sep=0pt] at
-	([xshift=-9.5cm,yshift=-6.75cm]current page.center) {教材: \@textbook(\@textbookauthor 著 \@textbookversion)};
+	([xshift=-9.5cm,yshift=-6.75cm]current page.center) {\textbookname\ \@textbook(\@textbookauthor  \@textbookversion)};
 	%
 	% \draw[gray,line width=5mm]
 	% ([xshift=2mm,yshift=-1mm]current page.south west) rectangle ([xshift=-2mm,yshift=1mm]current

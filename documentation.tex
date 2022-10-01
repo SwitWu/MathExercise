@@ -1,0 +1,129 @@
+\documentclass{article}
+
+\usepackage{ctex}
+\usepackage{enumitem}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\setlist{nosep}
+
+\DeclarePairedDelimiterX{\lrangle}[1]{\langle}{\rangle}{#1}
+\DeclarePairedDelimiterX{\innerp}[2]{\langle}{\rangle}{#1,#2}
+\DeclarePairedDelimiterX{\norm}[1]{\lVert}{\rVert}{#1}
+
+\newcommand{\cls}[1]{\textsf{#1}}
+\newcommand{\option}[1]{\texttt{#1}}
+\newcommand{\env}[1]{\texttt{#1}}
+\newcommand{\pkg}[1]{\textsf{#1}}
+\newcommand{\meta}[1]{\mbox{$\langle$\it #1\/$\rangle$}}
+\newcommand{\oargBracket}[1]{{\tt[}\meta{#1}{\tt]}}
+\newcommand{\oargAngle}[1]{{\tt<}\meta{#1}{\tt>}}
+
+\title{\bfseries\cls{mathexercise} 文档类使用手册}
+\author{武思豫}
+
+\begin{document}
+  
+\maketitle
+
+\section{介绍}
+
+\cls{mathexercise} 文档类主要用于编写数学习题解.
+
+
+\section{文档类选项}
+
+\cls{mathexercise} 文档类有下列选项:
+\begin{itemize}
+  \item \option{withinchap} (default) 此选项使得 \env{exercise} 环境的计数器随 chapter 自增,
+    当开始新的 chapter, 计数器的值重置为零.
+  \item \option{withinsec} 此选项使得 \env{exercise} 环境的计数器随 section 自增,
+    当开始新的 section, 计数器的值重置为零.
+  \item \option{chinese} 文档类默认不提供中文支持, 使用 \option{chinese} 选项后将调用 \pkg{ctex}
+    宏包并将 \env{proof} 和 \env{solution} 环境进行中文适配.
+\end{itemize}
+
+
+\section{环境}
+
+文档类主要提供了下列环境:
+\begin{description}
+  \item [\env{exercise} 环境] 此环境接受两个可选参数, 分别为 \oargBracket{integer}
+    和 \oargAngle{text}. 可选参数 \oargBracket{integer} 将当前题目的题号设置为 \meta{integer},
+    且后续题目的题号默认从 $\meta{integer}+1$ 开始增加. 使用可选参数 \oargAngle{text} 将会在题号后面
+    以加粗字体显示 \meta{text} 并以圆括号将其包裹.
+  \item [\env{proof} 环境] 证明环境.
+  \item [\env{solution} 环境] 解答环境.
+\end{description}
+
+
+\section{命令}
+
+文档类定义了如下命令, 方便用户调用:
+
+\subsection{无参数命令}
+
+\begin{center}
+  \begin{tabular}{ccc}
+    \toprule
+      Command & Effect & Meaning \\
+    \midrule
+      \verb|\e|  & $\mathrm{e}$ & Euler's number \\
+      \verb|\T|  & $\mathrm{T}$ & use for the transpose of matrix \\
+      \verb|\upi| & $\mathrm{i}$ & imaginary unit \\
+      \verb|\id|  & $\mathrm{id}$ & identity map \\
+      \verb|\diff| & $\mathrm{d}$ & differential operator \\
+      \verb|\codim| & $\operatorname{codim}$ & codimension \\
+      \verb|\conv| & $\operatorname{conv}$ & convex hall \\
+      \verb|\diag| & $\operatorname{diag}$ & diagonal \\
+      \verb|\diam| & $\operatorname{diam}$ & diameter \\
+      \verb|\dist| & $\operatorname{dist}$ & distance \\
+      \verb|\rank| & $\operatorname{rank}$ & rank \\
+      \verb|\sgn|  & $\operatorname{sgn}$ & sign \\
+      \verb|\supp| & $\operatorname{supp}$ & support \\
+      \verb|\lcm| & $\operatorname{lcm}$ & least common multiple \\
+      \verb|\Span| & $\operatorname{span}$ & span \\
+      \verb|\Re| (redefine) & $\operatorname{Re}$ & real part \\
+      \verb|\Im| (redefine) & $\operatorname{Im}$ & imaginary part \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+
+\subsection{有参数命令}
+
+\begin{center}
+  \begin{tabular}{cccc}
+    \toprule
+      Command & Example & Effect & Meaning \\
+    \midrule
+      \verb|\closure| & \verb|\closure{A}| & $\overline{A}$ & closure of set \\
+      \verb|\conjugate| & \verb|\conjugate{z}| & $\overline{z}$ & conjugate number \\
+      \verb|\lrangle| & \verb|\lrangle{g}| & $\lrangle{g}$ &  \\
+      \verb|\innerp| & \verb|\innerp{a}{b}| & $\innerp{a}{b}$ & inner product \\
+      \verb|\norm| & \verb|\norm{v}| & $\norm{v}$ & norm \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+
+\section{宏包依赖}
+
+此文档类默认加载下列宏包用于提供各种所需功能:
+\begin{itemize}
+  \item \pkg{ctex} (取决于 \option{chinese} 选项)
+  \item \pkg{indentfirst}
+  \item \pkg{enumitem}
+  \item \pkg{mathtools} (预加载 \pkg{amsmath}, 提供了 \verb|\lrangle|、\verb|\innerp|、
+    \verb|\norm|)
+  \item \pkg{amssymb}
+  \item \pkg{amsthm}
+  \item \pkg{extarrows}
+  \item \pkg{xcolor}
+  \item \pkg{tcolorbox}
+  \item \pkg{geometry}
+  \item \pkg{tikz}
+  \item \pkg{tasks}
+  \item \pkg{hyperref}
+\end{itemize}
+
+\end{document}
