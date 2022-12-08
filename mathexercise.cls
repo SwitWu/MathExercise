@@ -111,12 +111,13 @@
 \DeclareMathOperator{\diam}{diam} % diameter
 \DeclareMathOperator{\dist}{dist}
 \DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\lcm}{lcm} % least common multiple
 \DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator{\sgn}{sgn}
 \DeclareMathOperator{\spt}{spt} % support set
 \DeclareMathOperator{\supp}{supp} % another support set
-\DeclareMathOperator{\lcm}{lcm} % least common multiple
 \DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\tr}{tr}
 % Real and Imaginary part of complex numbers
 \renewcommand{\Re}{\operatorname{Re}}
 \renewcommand{\Im}{\operatorname{Im}}
