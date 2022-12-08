@@ -114,10 +114,11 @@
 \DeclareMathOperator{\lcm}{lcm} % least common multiple
 \DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\sign}{sign}
 \DeclareMathOperator{\spt}{spt} % support set
 \DeclareMathOperator{\supp}{supp} % another support set
 \DeclareMathOperator{\Span}{span}
-\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\tr}{tr} % trace
 % Real and Imaginary part of complex numbers
 \renewcommand{\Re}{\operatorname{Re}}
 \renewcommand{\Im}{\operatorname{Im}}
