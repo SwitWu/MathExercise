@@ -53,7 +53,7 @@
   {.5em}{\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}
 
 \if@chinesesupport
-  \RequirePackage[heading=true]{ctex}
+  \RequirePackage[heading=true, fontset = fandol]{ctex}
   \ctexset {
     chapter = {
       beforeskip = 0pt,
@@ -251,6 +251,14 @@
       % ([xshift=2mm,yshift=-1mm]current page.south west) rectangle ([xshift=-2mm,yshift=1mm]current
       % page.north east);
     \end{tikzpicture}
-    \clearpage\thispagestyle{empty}\mbox{}\clearpage
+    \clearpage\thispagestyle{empty}
+    \begin{center}
+      \Large\bfseries Declaration
+    \end{center}
+    The class file \texttt{mathexercise.cls} for this document is available at my github
+    repository \href{https://github.com/SwitWu/MathExercise}{MathExercise}.
+    Please report any issues you find in this document to me
+    through email or github issues. Fork and pull requests are welcome.
+    \clearpage
   }
 \else\fi
