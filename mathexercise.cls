@@ -42,11 +42,11 @@
 \usetikzlibrary{intersections,decorations.text}
 % \RequirePackage{tcolorbox}
 % \tcolorboxenvironment{exercise}{arc is angular,colback=white,colframe=blue!50!black}
-\definecolor{c1}{RGB}{62, 97, 127}
+\definecolor{c1}{RGB}{62,  97,  127}
 \definecolor{c2}{RGB}{104, 182, 182}
 \definecolor{c3}{RGB}{107, 190, 190}
 \definecolor{c4}{RGB}{100, 172, 174}
-\definecolor{c5}{RGB}{95, 162, 162}
+\definecolor{c5}{RGB}{95,  162, 162}
 
 %%% amsthm
 \newtheoremstyle{mytheorem}{3pt}{3pt}{\rmfamily}{\parindent}{\bfseries}{}%
@@ -101,7 +101,6 @@
 \newcommand{\T}{\mathrm{T}}
 \newcommand{\upi}{\mathrm{i}}
 \newcommand{\id}{\mathrm{id}}
-\newcommand{\weakconverge}{\rightharpoonup}
 % Differential Operator(在多种实现方法之中，个人认为此方法最佳)
 \newcommand{\diff}{\mathop{}\!\mathrm{d}}
 % Declare Math Operator
@@ -123,6 +122,7 @@
 \renewcommand{\Re}{\operatorname{Re}}
 \renewcommand{\Im}{\operatorname{Im}}
 
+\newcommand{\weakconverge}{\rightharpoonup}
 \newcommand{\closure}[1]{\overline{#1}} % the closure of a set
 \newcommand{\conjugate}[1]{\overline{#1}}
 % tricks from mathtools

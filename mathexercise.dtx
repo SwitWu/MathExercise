@@ -1,0 +1,574 @@
+% \iffalse meta-comment
+% 
+% Copyright (C) 2022 by SiyuWu
+% ----------------------------
+%
+% This file may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3 
+% of this license or (at your option) any later version.
+% The latest version of this license is in:
+%
+% http://www.latex-project.org/lppl.txt
+%
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+% 
+% \fi
+% 
+% \iffalse
+%<*driver>
+\ProvidesFile{mathexercise.dtx}
+%</driver>
+%<class>\NeedsTeXFormat{LaTeX2e}[2022/12/10]
+%<class>\ProvidesClass{mathexercise}
+%<*class>
+  [2022/12/12 v1.0 class file to write mathematical exercise solutions]
+%</class>
+
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[fontset=fandol]{ctex}
+\usepackage{enumitem}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage[left=4cm]{geometry}
+\setlist{nosep}
+\DeclarePairedDelimiterX{\lrangle}[1]{\langle}{\rangle}{#1}
+\DeclarePairedDelimiterX{\innerp}[2]{\langle}{\rangle}{#1,#2}
+\DeclarePairedDelimiterX{\norm}[1]{\lVert}{\rVert}{#1}
+\newcommand{\cls}[1]{\textsf{#1}}
+\newcommand{\option}[1]{\texttt{#1}}
+\newcommand{\env}[1]{\texttt{#1}}
+\newcommand{\pkg}[1]{\textsf{#1}}
+\newcommand{\oargBracket}[1]{{\tt[}\meta{#1}{\tt]}}
+\newcommand{\oargAngle}[1]{{\tt<}\meta{#1}{\tt>}}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{349}
+% 
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+% 
+% \changes{v1.0}{2022/12/12}{initial version}
+% 
+% \GetFileInfo{mathexercise.dtx}
+% 
+% \title{\bfseries\cls{mathexercise} 文档类使用手册\thanks{This document
+%   corresponds to \cls{mathexercise}~\fileversion, dated \filedate.}}
+% \author{SiyuWu \\ \texttt{sywumath@gmail.com}}
+% 
+% \maketitle
+%
+% \tableofcontents
+% 
+% \section{介绍}
+% 
+% \cls{mathexercise} 文档类主要用于编写数学习题解.
+% 
+% 
+% \section{文档类选项}
+% 
+% \cls{mathexercise} 文档类有下列选项:
+% \begin{description}
+%   \item [\option{withinchap}] (default) 此选项使得 \env{exercise} 环境的计数器随 chapter 自增,
+%     当开始新的 chapter, 计数器的值重置为零.
+%   \item [\option{withinsec}] 此选项使得 \env{exercise} 环境的计数器随 section 自增,
+%     当开始新的 section, 计数器的值重置为零.
+%   \item [\option{chinese}] 文档类默认不提供中文支持, 使用 \option{chinese} 选项后将调用 \pkg{ctex}
+%     宏包并进行中文适配. 默认情况下建议使用 \texttt{pdflatex} 编译命令, 使用 \option{chinese}
+%     选项后请使用 \texttt{xelatex} 或者 \texttt{lualatex} 编译命令.
+%   \item [\option{tikzcover}] 文档类默认情况下不使用 tikz 定制封面, 
+%     如果需要此功能, 请使用 \option{tikzcover} 选项.
+% \end{description}
+% 
+% 
+% \section{导言区声明}
+% 
+% 文档类需要用户在导言区输入自定义信息, 如果使用了 \option{tikzcover} 选项,
+% 需要输入类似于下列的信息:
+% \begin{verbatim}
+%     \title{PDE Solutions}
+%     \author{wsy}
+%     \textbook{Partial Differential Equations}
+%     \textbookauthor{Evans}
+%     \textbookversion{Second Edition}
+% \end{verbatim}
+% 如果未使用 \option{tikzcover} 选项, 则只需要和标准文档类一样只输入
+% title 和 author 信息即可.
+% 随后, 使用 \verb|\maketitle| 命令便可以生成封面.
+% 
+% 
+% \section{环境}
+% 
+% \DescribeEnv{exercise}
+% \DescribeEnv{proof}
+% \DescribeEnv{solution}
+% \DescribeEnv{theorem}
+% 文档类主要提供了下列环境:
+% \begin{description}
+%   \item [\env{exercise}] 此环境接受两个可选参数, 分别为 \oargBracket{integer}
+%     和 \oargAngle{text}. 可选参数 \oargBracket{integer} 将当前题目的题号设置为 \meta{integer},
+%     且后续题目的题号默认从 $\meta{integer}+1$ 开始增加. 使用可选参数 \oargAngle{text} 将会在题号后面
+%     以加粗字体显示 \meta{text} 并以圆括号将其包裹.
+%   \item [\env{proof}] 证明环境
+%   \item [\env{solution}] 解答环境
+%   \item [\env{theorem}] 定理环境
+%   \item [\env{lemma}] 引理环境
+%   \item [\env{example}] 例环境
+%   \item [\env{remark}] 注环境
+%   \item [\env{corollary}] 推论环境
+%   \item [\env{proposition}] 命题环境
+%   \item [\env{note}] 笔记环境
+%   \item [\env{tasks}] 由 \pkg{tasks} 宏包提供, 具体使用方法参考其手册
+% \end{description}
+% 
+% 注意: \env{proof}、\env{solution}、\env{theorem}、\env{lemma}、\env{example}、\env{remark}、
+% \env{corollary}、\env{note} 环境的 Heading 受 \option{chinese} 选项影响.
+% 
+% 
+% \section{命令}
+% 
+% 文档类定义了如下命令, 方便用户调用:
+% 
+% \subsection{无参数命令}
+% 
+% \begin{center}
+%   \begin{tabular}{ccc}
+%     \toprule
+%       Command & Effect & Meaning \\
+%     \midrule
+%       \verb|\e|  & $\mathrm{e}$ & Euler's number \\
+%       \verb|\T|  & $\mathrm{T}$ & use for the transpose of matrix \\
+%       \verb|\upi| & $\mathrm{i}$ & imaginary unit \\
+%       \verb|\id|  & $\mathrm{id}$ & identity map \\
+%       \verb|\diff| & $\mathrm{d}$ & differential operator \\
+%       \verb|\codim| & $\operatorname{codim}$ & codimension \\
+%       \verb|\conv| & $\operatorname{conv}$ & convex hall \\
+%       \verb|\diag| & $\operatorname{diag}$ & diagonal \\
+%       \verb|\diam| & $\operatorname{diam}$ & diameter \\
+%       \verb|\dist| & $\operatorname{dist}$ & distance \\
+%       \verb|\Int|  & $\operatorname{Int}$  & interior of set \\
+%       \verb|\rank| & $\operatorname{rank}$ & rank \\
+%       \verb|\sgn|  & $\operatorname{sgn}$ & sign \\
+%       \verb|\supp| & $\operatorname{supp}$ & support \\
+%       \verb|\lcm| & $\operatorname{lcm}$ & least common multiple \\
+%       \verb|\Span| & $\operatorname{span}$ & span \\
+%       \verb|\Re| (redefine) & $\operatorname{Re}$ & real part \\
+%       \verb|\Im| (redefine) & $\operatorname{Im}$ & imaginary part \\
+%       \verb|\weakconverge|  & $\rightharpoonup$   & weakly converge to \\ 
+%     \bottomrule
+%   \end{tabular}
+% \end{center}
+% 
+% 
+% \subsection{有参数命令}
+% 
+% \begin{center}
+%   \begin{tabular}{cccc}
+%     \toprule
+%       Command & Example & Effect & Meaning \\
+%     \midrule
+%       \verb|\closure| & \verb|\closure{A}| & $\overline{A}$ & closure of set \\
+%       \verb|\conjugate| & \verb|\conjugate{z}| & $\overline{z}$ & conjugate number \\
+%       \verb|\lrangle| & \verb|\lrangle{g}| & $\lrangle{g}$ &  \\
+%       \verb|\innerp| & \verb|\innerp{a}{b}| & $\innerp{a}{b}$ & inner product \\
+%       \verb|\norm| & \verb|\norm{v}| & $\norm{v}$ & norm \\
+%     \bottomrule
+%   \end{tabular}
+% \end{center}
+% 
+% 
+% \section{宏包依赖}
+% 
+% \cls{mathexercise} 文档类预加载了下列宏包用于提供各种常用功能:
+% \begin{itemize}
+%   \item \pkg{ctex} (取决于 \option{chinese} 选项)
+%   \item \pkg{indentfirst}
+%   \item \pkg{enumitem}
+%   \item \pkg{mathtools} (\pkg{mathtools} 宏包预加载 \pkg{amsmath} 宏包, 
+%     本文档类依赖 \pkg{mathtools} 创建命令 \verb|\lrangle|、\verb|\innerp|、\verb|\norm|)
+%   \item \pkg{amssymb}
+%   \item \pkg{amsthm}
+%   \item \pkg{extarrows}
+%   \item \pkg{xcolor}
+%   \item \pkg{tcolorbox}
+%   \item \pkg{geometry}
+%   \item \pkg{tikz}
+%   \item \pkg{tasks}
+%   \item \pkg{hyperref}
+% \end{itemize}
+% 
+% 如果需要使用其它宏包, 直接在主文件导言区通过 \verb|\usepackage{}| 命令添加即可.
+% 
+% \StopEventually{\PrintIndex}
+%
+% \section{Source Code}
+%
+%    \begin{macrocode}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{mathexercise}
+  [2022/10/02 class file to write mathematical exercise solutions]
+%    \end{macrocode}
+% 
+% \begin{macro}{\if@chinesesupport}
+% \begin{macro}{\if@tikzcover}
+% 是否提供中文支持以及是否使用 TikZ 绘制封面。
+%    \begin{macrocode}
+\newif\if@chinesesupport
+\newif\if@tikzcover
+\@chinesesupportfalse
+\@tikzcoverfalse
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% 
+% \begin{macro}{withinchap}
+% \begin{macro}{withinsec}
+% \begin{macro}{tikzcover}
+% \begin{macro}{chinese}
+% 声明选项，处理选项。
+%    \begin{macrocode}
+\DeclareOption{withinchap}{\def\exercounter@within{chapter}}
+\DeclareOption{withinsec}{\def\exercounter@within{section}}
+\DeclareOption{tikzcover}{\@tikzcovertrue}
+\DeclareOption{chinese}{\@chinesesupporttrue}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
+\ExecuteOptions{withinchap}
+\ProcessOptions\relax
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% 加载 \cls{report} 文档类
+%    \begin{macrocode}
+\LoadClass{report}
+%    \end{macrocode}
+% 加载所需宏包
+%    \begin{macrocode}
+\RequirePackage{indentfirst}
+\RequirePackage[shortlabels]{enumitem}
+\RequirePackage{mathtools}
+\RequirePackage{amssymb}
+\RequirePackage{amsthm}
+\RequirePackage{extarrows}
+\RequirePackage{xcolor}
+\RequirePackage{tcolorbox}
+\RequirePackage[width=14cm]{geometry}
+\RequirePackage{tikz}
+\usetikzlibrary{intersections,decorations.text}
+%    \end{macrocode}
+定义颜色值。
+%    \begin{macrocode}
+\definecolor{c1}{RGB}{62,  97,  127}
+\definecolor{c2}{RGB}{104, 182, 182}
+\definecolor{c3}{RGB}{107, 190, 190}
+\definecolor{c4}{RGB}{100, 172, 174}
+\definecolor{c5}{RGB}{95,  162, 162}
+%    \end{macrocode}
+% 根据 \pkg{amsthm} 宏包，新建定理风格。
+%    \begin{macrocode}
+\newtheoremstyle{mytheorem}{3pt}{3pt}{\rmfamily}{\parindent}{\bfseries}{}%
+  {.5em}{\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}
+%    \end{macrocode}
+% 根据是否提供中文支持分别进行中西文设定。
+%    \begin{macrocode}
+\if@chinesesupport
+  \RequirePackage[heading=true, fontset = fandol]{ctex}
+  \ctexset {
+    chapter = {
+      beforeskip = 0pt,
+      fixskip = true,
+      format = \Huge\bfseries,
+      nameformat = \rule{\linewidth}{1bp}\par\bigskip\hfill\chapternamebox,
+      number = \arabic{chapter},
+      aftername = \par\medskip,
+      aftertitle = \par\bigskip\nointerlineskip\rule{\linewidth}{2bp}\par}
+  }
+  \newcommand\chapternamebox[1]{%
+  \parbox{\ccwd}{\linespread{1}\selectfont\centering #1}}
+  \newcommand{\solutionname}{解}
+  %theorem environment
+  \theoremstyle{mytheorem}\newtheorem{theorem}{定理}
+  \theoremstyle{mytheorem}\newtheorem{lemma}{引理}
+  \theoremstyle{mytheorem}\newtheorem{example}{例}
+  \theoremstyle{mytheorem}\newtheorem*{remark}{注}
+  \theoremstyle{mytheorem}\newtheorem*{corollary}{推论}
+  \theoremstyle{mytheorem}\newtheorem{proposition}{命题}
+  \theoremstyle{mytheorem}\newtheorem{note}{笔记}
+  \newcommand{\authorname}{作者}
+  \newcommand{\textbookname}{教材}
+  \newcommand{\proofnamestyle}{\bfseries}
+  \newcommand{\proofpunct}{:}
+\else
+  \newcommand{\solutionname}{Solution}
+  \theoremstyle{mytheorem}\newtheorem{theorem}{Theorem}
+  \theoremstyle{mytheorem}\newtheorem{lemma}{Lemma}
+  \theoremstyle{mytheorem}\newtheorem{example}{Example}
+  \theoremstyle{mytheorem}\newtheorem*{remark}{Remark}
+  \theoremstyle{mytheorem}\newtheorem*{corollary}{Corollary}
+  \theoremstyle{mytheorem}\newtheorem{proposition}{Proposition}
+  \theoremstyle{definition}\newtheorem{note}{Note}[chapter]
+  \newcommand{\authorname}{Author}
+  \newcommand{\textbookname}{Textbook}
+  \newcommand{\proofnamestyle}{\itshape}
+  \newcommand{\proofpunct}{.}
+\fi
+%    \end{macrocode}
+% 
+% \begin{macro}{\e}
+% \begin{macro}{\T}
+% \begin{macro}{\upi}
+% \begin{macro}{\id}
+% 罗马字体
+%    \begin{macrocode}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\T}{\mathrm{T}}
+\newcommand{\upi}{\mathrm{i}}
+\newcommand{\id}{\mathrm{id}}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\weakconverge}
+% \begin{macro}{\closure}
+% \begin{macro}{\conjugate}
+% 弱收敛、闭包、共轭。
+%    \begin{macrocode}
+\newcommand{\weakconverge}{\rightharpoonup}
+\newcommand{\closure}[1]{\overline{#1}}
+\newcommand{\conjugate}[1]{\overline{#1}}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\diff}
+% 微分算符。
+%    \begin{macrocode}
+\newcommand{\diff}{\mathop{}\!\mathrm{d}}
+%    \end{macrocode}
+% \end{macro}
+% 使用 |\DeclareMathOperator| 定义算符。
+%    \begin{macrocode}
+\DeclareMathOperator{\codim}{codim}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\spt}{spt}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\tr}{tr}
+%    \end{macrocode}
+%
+% \begin{macro}{\Rm}
+% \begin{macro}{\Im}
+% 重定义 |\Rm| 和 |\Im| 使其用于复数的实部和虚部。
+%    \begin{macrocode}
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\innerp}
+% \begin{macro}{\lrangle}
+% \begin{macro}{\norm}
+% 利用 \pkg{mathtools} 宏包构建宏。
+%    \begin{macrocode}
+\DeclarePairedDelimiterX{\lrangle}[1]{\langle}{\rangle}{#1}
+\DeclarePairedDelimiterX{\innerp}[2]{\langle}{\rangle}{#1,#2}
+\DeclarePairedDelimiterX{\norm}[1]{\lVert}{\rVert}{#1}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\textbook}
+% \begin{macro}{\textbookauthor}
+% \begin{macro}{\textbookversion}
+% 三个用户宏分别用于输入教材名、教材作者以及教材版本。
+%    \begin{macrocode}
+\newcommand{\textbook}[1]{\gdef\@textbook{#1}}
+\newcommand{\textbookauthor}[1]{\gdef\@textbookauthor{#1}}
+\newcommand{\textbookversion}[1]{\gdef\@textbookversion{#1}}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{environment}{proof}
+% \begin{environment}{solution}
+% 重定义 |proof| 环境，新定义 |solution| 环境。
+%    \begin{macrocode}
+\renewenvironment{proof}[1][\proofname]{\par
+  \pushQED{\qed}
+  \normalfont\topsep1\p@\@plus6\p@\relax
+  \trivlist\item\relax
+	{\hspace*{\parindent}{\proofnamestyle #1}\@addpunct{\proofpunct}}
+  \hspace\labelsep\ignorespaces
+}{%
+	\popQED\endtrivlist\@endpefalse
+}
+
+\newenvironment{solution}[1][\solutionname]{\par
+	\pushQED{\qed}%
+  \normalfont\topsep1\p@\@plus6\p@\relax
+  \trivlist\item\relax
+	{\hspace*{\parindent}{\proofnamestyle #1}\@addpunct{\proofpunct}}%
+  \hspace\labelsep\ignorespaces
+}{%
+	\popQED\endtrivlist\@endpefalse
+}
+%    \end{macrocode}
+% \end{environment}
+% \end{environment}
+%
+% \begin{environment}{exercise}
+% 定义 |exercise| 环境。
+%    \begin{macrocode}
+\newcounter{exercounter}
+\counterwithin*{exercounter}{\exercounter@within}
+\NewDocumentEnvironment{exercise}{o d<> +b}
+  {%
+    \IfNoValueTF{#1}
+      {\stepcounter{exercounter}}
+      {\setcounter{exercounter}{#1}}
+    \par\textbf{\theexercounter.}\hspace{.333em}%
+	\IfNoValueTF{#2}
+    {#3}
+    {\textbf{(#2)}\hspace{.333em}#3}
+  }
+  {\ignorespacesafterend}
+%    \end{macrocode}
+% \end{environment}
+% \pkg{enumitem} 设定。
+%    \begin{macrocode}
+\setlist{nosep,left=\parindent}
+%    \end{macrocode}
+% \pkg{tasks} 宏包设置。
+%    \begin{macrocode}
+\RequirePackage{tasks}
+\settasks{after-item-skip=0.5ex plus 0.5ex minus 1ex}
+%    \end{macrocode}
+% \pkg{hyperref} 宏包加载及设置。
+%    \begin{macrocode}
+\RequirePackage{hyperref}
+\hypersetup{
+  colorlinks,%
+  linkcolor=red
+}
+%    \end{macrocode}
+% \begin{macro}{\maketitle}
+% 封面设置。
+%    \begin{macrocode}
+\if@tikzcover
+  \renewcommand{\maketitle}{%
+    \thispagestyle{empty}
+    \begin{tikzpicture}[overlay,remember picture,font=\sffamily\bfseries]
+      \draw[ultra thick,c4,name path=big arc] ([xshift=-2mm]current page.north) 
+      arc(150:285:11)
+      coordinate[pos=0.225] (x0);
+      \begin{scope}
+      \clip ([xshift=-2mm]current page.north) arc(150:285:11)
+        --(current page.northeast);
+      \fill[c4!50,opacity=0.25] ([xshift=4.55cm]x0) circle (4.55);
+      \fill[c4!50,opacity=0.25] ([xshift=3.4cm]x0) circle (3.4);
+      \fill[c4!50,opacity=0.25] ([xshift=2.25cm]x0) circle (2.25);
+      \draw[ultra thick,c4!50] (x0) arc(-90:30:6.5);
+      \draw[ultra thick,c4] (x0) arc(90:-30:8.75);
+      \draw[ultra thick,c4!50,name path=arc1] (x0) arc(90:-90:4.675);
+      \draw[ultra thick,c4!50] (x0) arc(90:-90:2.875);
+      \path[name intersections={of=big arc and arc1,by=x1}];
+      \draw[ultra thick,c4,name path=arc2] (x1) arc(135:-20:4.75);
+      \draw[ultra thick,c4!50] (x1) arc(135:-20:8.75);
+      \path[name intersections={of=big arc and arc2,by={aux,x2}}];
+      \draw[ultra thick,c4!50] (x2) arc(180:50:2.25);
+      \end{scope}
+      \path[decoration={text along path,text color=c4,
+              raise = -2.8ex,
+              text  along path,
+              text = {|\sffamily\bfseries|\@date},
+              text align = center,
+            },
+            decorate
+          ] ([xshift=-2mm]current page.north) arc(150:245:11);
+      %
+      \begin{scope}
+      \path[clip,postaction={fill=c3}]
+      ([xshift=2cm,yshift=-8cm]current page.center) rectangle ++ (4.2,7.7);
+      \draw[c5,ultra thick,fill=c2] ([xshift=0.5cm,yshift=-8cm]current page.center)
+        ([xshift=0.5cm,yshift=-8cm]current page.center)  arc(180:60:2)
+        |- ++ (-3,6) --cycle;
+      \draw[ultra thick,c5] ([xshift=-1.5cm,yshift=-8cm]current page.center)
+      arc(180:0:2);
+      \draw[ultra thick,c5] ([xshift=0.5cm,yshift=-8cm]current page.center)
+      arc(180:0:2);
+      \draw[ultra thick,c5] ([xshift=2.5cm,yshift=-8cm]current page.center)
+      arc(180:0:2);
+      \draw[ultra thick,c5] ([xshift=4.5cm,yshift=-8cm]current page.center)
+      arc(180:0:2);
+      \fill[red] ([xshift=2.5cm,yshift=-8cm]current page.center) +(60:2)
+        circle(1.5mm) node[above right=2mm,text=c5!80!black]
+        {$\rho:=\dfrac{1+\sqrt{-3}}{2}$};
+      \end{scope}
+      %
+      \fill[c1] ([xshift=2cm,yshift=-8cm]current page.center)
+        rectangle ++ (-12.7,7.7);
+      \node[text=white,anchor=west,scale=3,inner sep=0pt] at
+      ([xshift=-9.5cm,yshift=-3.25cm]current page.center) {\@title};
+      \node[text=white,anchor=west,scale=1.5,inner sep=0pt] at
+      ([xshift=-9.5cm,yshift=-6cm]current page.center) {\authorname:\ \@author};
+      \node[text=white,anchor=west,scale=1.5,inner sep=0pt] at
+      ([xshift=-9.5cm,yshift=-6.75cm]current page.center)%
+      {\textbookname:\ \@textbook\ (\@textbookauthor\ \@textbookversion)};
+      %
+      % \draw[gray,line width=5mm]
+      % ([xshift=2mm,yshift=-1mm]current page.south west) 
+        rectangle ([xshift=-2mm,yshift=1mm]current
+      % page.north east);
+    \end{tikzpicture}
+    \clearpage\thispagestyle{empty}
+    \begin{center}
+      \Large\bfseries Declaration
+    \end{center}
+    The class file \texttt{mathexercise.cls} for this document
+    is available at my github repository
+    \href{https://github.com/SwitWu/MathExercise}{MathExercise}.
+    Please report any issues you find in this document to me
+    through email or github issues. Fork and pull requests are welcome.
+    \clearpage
+  }
+\else\fi
+%    \end{macrocode}
+% \end{macro}
+% \Finale
+\endinput
