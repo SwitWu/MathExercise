@@ -1,34 +1,36 @@
-% author: SiyuWu
-% date: 2021/09/24
-% project: mathexercise.cls
-% usage: Class file to write exercise solutions
-
-%%% Identification
-\NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{mathexercise}[2022/10/02 class file to write mathematical exercise solutions]
+%%
+%% This is file `mathexercise.cls',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% mathexercise.dtx  (with options: `class')
+%% 
+%% This is a generated file. Copyright (C) 2022 by SiyuWu
+%% This file may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either
+%% version 1.3 of this license or (at your option) any later
+%% version.  The latest version of this license is in:
+%%    http://www.latex-project.org/lppl.txt
+%%    and version 1.3 or later is part of all distributions of
+%% LaTeX version 2005/12/01 or later.
+%% 
+\NeedsTeXFormat{LaTeX2e}[2022/12/10]
+\ProvidesClass{mathexercise}
+  [2022/12/12 v1.0 class file to write mathematical exercise solutions]
 
 \newif\if@chinesesupport
-\newif\if@tikzcover       % whether use tikz to reproduce cover
+\newif\if@tikzcover
 \@chinesesupportfalse
 \@tikzcoverfalse
-
-%%% 选项设置
-
-% Settle withinchap and withinsec options
 \DeclareOption{withinchap}{\def\exercounter@within{chapter}}
 \DeclareOption{withinsec}{\def\exercounter@within{section}}
 \DeclareOption{tikzcover}{\@tikzcovertrue}
-
-% 是否提供中文支持
 \DeclareOption{chinese}{\@chinesesupporttrue}
-
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
-
 \ExecuteOptions{withinchap}
 \ProcessOptions\relax
-\LoadClass{report} % should go after processing options
-
-%%% 加载所需宏包
+\LoadClass{report}
 \RequirePackage{indentfirst}
 \RequirePackage[shortlabels]{enumitem}
 \RequirePackage{mathtools}
@@ -40,18 +42,13 @@
 \RequirePackage[width=14cm]{geometry}
 \RequirePackage{tikz}
 \usetikzlibrary{intersections,decorations.text}
-% \RequirePackage{tcolorbox}
-% \tcolorboxenvironment{exercise}{arc is angular,colback=white,colframe=blue!50!black}
 \definecolor{c1}{RGB}{62,  97,  127}
 \definecolor{c2}{RGB}{104, 182, 182}
 \definecolor{c3}{RGB}{107, 190, 190}
 \definecolor{c4}{RGB}{100, 172, 174}
 \definecolor{c5}{RGB}{95,  162, 162}
-
-%%% amsthm
 \newtheoremstyle{mytheorem}{3pt}{3pt}{\rmfamily}{\parindent}{\bfseries}{}%
   {.5em}{\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}
-
 \if@chinesesupport
   \RequirePackage[heading=true, fontset = fandol]{ctex}
   \ctexset {
@@ -93,73 +90,55 @@
   \newcommand{\proofnamestyle}{\itshape}
   \newcommand{\proofpunct}{.}
 \fi
-
-%%% 定义常用数学命令
-
-% Roman Font
 \newcommand{\e}{\mathrm{e}}
 \newcommand{\T}{\mathrm{T}}
 \newcommand{\upi}{\mathrm{i}}
 \newcommand{\id}{\mathrm{id}}
-% Differential Operator(在多种实现方法之中，个人认为此方法最佳)
+\newcommand{\weakconverge}{\rightharpoonup}
+\newcommand{\closure}[1]{\overline{#1}}
+\newcommand{\conjugate}[1]{\overline{#1}}
 \newcommand{\diff}{\mathop{}\!\mathrm{d}}
-% Declare Math Operator
 \DeclareMathOperator{\codim}{codim}
 \DeclareMathOperator{\conv}{conv}
 \DeclareMathOperator{\diag}{diag}
-\DeclareMathOperator{\diam}{diam} % diameter
+\DeclareMathOperator{\diam}{diam}
 \DeclareMathOperator{\dist}{dist}
 \DeclareMathOperator{\Int}{Int}
-\DeclareMathOperator{\lcm}{lcm} % least common multiple
+\DeclareMathOperator{\lcm}{lcm}
 \DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator{\sgn}{sgn}
 \DeclareMathOperator{\sign}{sign}
-\DeclareMathOperator{\spt}{spt} % support set
-\DeclareMathOperator{\supp}{supp} % another support set
+\DeclareMathOperator{\spt}{spt}
+\DeclareMathOperator{\supp}{supp}
 \DeclareMathOperator{\Span}{span}
-\DeclareMathOperator{\tr}{tr} % trace
-% Real and Imaginary part of complex numbers
+\DeclareMathOperator{\tr}{tr}
 \renewcommand{\Re}{\operatorname{Re}}
 \renewcommand{\Im}{\operatorname{Im}}
-
-\newcommand{\weakconverge}{\rightharpoonup}
-\newcommand{\closure}[1]{\overline{#1}} % the closure of a set
-\newcommand{\conjugate}[1]{\overline{#1}}
-% tricks from mathtools
 \DeclarePairedDelimiterX{\lrangle}[1]{\langle}{\rangle}{#1}
 \DeclarePairedDelimiterX{\innerp}[2]{\langle}{\rangle}{#1,#2}
 \DeclarePairedDelimiterX{\norm}[1]{\lVert}{\rVert}{#1}
-
-% textbook name
 \newcommand{\textbook}[1]{\gdef\@textbook{#1}}
 \newcommand{\textbookauthor}[1]{\gdef\@textbookauthor{#1}}
 \newcommand{\textbookversion}[1]{\gdef\@textbookversion{#1}}
-
-%%% proof environment and solution environment
 \renewenvironment{proof}[1][\proofname]{\par
-	\pushQED{\qed}%
-	\normalfont\topsep1\p@\@plus6\p@\relax
-	\trivlist
-	\item\relax
-	{\hspace*{\parindent}{\proofnamestyle #1}\@addpunct{\proofpunct}}\hspace\labelsep\ignorespaces
+  \pushQED{\qed}
+  \normalfont\topsep1\p@\@plus6\p@\relax
+  \trivlist\item\relax
+{\hspace*{\parindent}{\proofnamestyle #1}\@addpunct{\proofpunct}}
+  \hspace\labelsep\ignorespaces
 }{%
-	\popQED\endtrivlist\@endpefalse
+\popQED\endtrivlist\@endpefalse
 }
 
 \newenvironment{solution}[1][\solutionname]{\par
-	\pushQED{\qed}%
-	\normalfont\topsep1\p@\@plus6\p@\relax
-	\trivlist
-	\item\relax
-	{\hspace*{\parindent}{\proofnamestyle #1}\@addpunct{\proofpunct}}\hspace\labelsep\ignorespaces
+\pushQED{\qed}%
+  \normalfont\topsep1\p@\@plus6\p@\relax
+  \trivlist\item\relax
+{\hspace*{\parindent}{\proofnamestyle #1}\@addpunct{\proofpunct}}%
+  \hspace\labelsep\ignorespaces
 }{%
-	\popQED\endtrivlist\@endpefalse
+\popQED\endtrivlist\@endpefalse
 }
-
-% 定制列表
-\setlist{nosep,left=\parindent}
-
-% exercise environment
 \newcounter{exercounter}
 \counterwithin*{exercounter}{\exercounter@within}
 \NewDocumentEnvironment{exercise}{o d<> +b}
@@ -168,35 +147,29 @@
       {\stepcounter{exercounter}}
       {\setcounter{exercounter}{#1}}
     \par\textbf{\theexercounter.}\hspace{.333em}%
-	\IfNoValueTF{#2}
-	  {#3}
-	  {\textbf{(#2)}\hspace{.333em}#3}
+\IfNoValueTF{#2}
+    {#3}
+    {\textbf{(#2)}\hspace{.333em}#3}
   }
   {\ignorespacesafterend}
-
-
-%---------tasks--------
+\setlist{nosep,left=\parindent}
 \RequirePackage{tasks}
 \settasks{after-item-skip=0.5ex plus 0.5ex minus 1ex}
-
-% hyperref
 \RequirePackage{hyperref}
 \hypersetup{
-    colorlinks,%
-    linkcolor=red
+  colorlinks,%
+  linkcolor=red
 }
-
-% titlepage
-
 \if@tikzcover
   \renewcommand{\maketitle}{%
     \thispagestyle{empty}
     \begin{tikzpicture}[overlay,remember picture,font=\sffamily\bfseries]
-      \draw[ultra thick,c4,name path=big arc] ([xshift=-2mm]current page.north) arc(150:285:11)
+      \draw[ultra thick,c4,name path=big arc] ([xshift=-2mm]current page.north)
+      arc(150:285:11)
       coordinate[pos=0.225] (x0);
       \begin{scope}
-      \clip ([xshift=-2mm]current page.north) arc(150:285:11) --(current page.north
-      east);
+      \clip ([xshift=-2mm]current page.north) arc(150:285:11)
+        --(current page.northeast);
       \fill[c4!50,opacity=0.25] ([xshift=4.55cm]x0) circle (4.55);
       \fill[c4!50,opacity=0.25] ([xshift=3.4cm]x0) circle (3.4);
       \fill[c4!50,opacity=0.25] ([xshift=2.25cm]x0) circle (2.25);
@@ -233,12 +206,13 @@
       arc(180:0:2);
       \draw[ultra thick,c5] ([xshift=4.5cm,yshift=-8cm]current page.center)
       arc(180:0:2);
-      \fill[red] ([xshift=2.5cm,yshift=-8cm]current page.center) +(60:2) circle(1.5mm)
-      node[above
-      right=2mm,text=c5!80!black]{$\rho:=\dfrac{1+\sqrt{-3}}{2}$};
+      \fill[red] ([xshift=2.5cm,yshift=-8cm]current page.center) +(60:2)
+        circle(1.5mm) node[above right=2mm,text=c5!80!black]
+        {$\rho:=\dfrac{1+\sqrt{-3}}{2}$};
       \end{scope}
       %
-      \fill[c1] ([xshift=2cm,yshift=-8cm]current page.center) rectangle ++ (-12.7,7.7);
+      \fill[c1] ([xshift=2cm,yshift=-8cm]current page.center)
+        rectangle ++ (-12.7,7.7);
       \node[text=white,anchor=west,scale=3,inner sep=0pt] at
       ([xshift=-9.5cm,yshift=-3.25cm]current page.center) {\@title};
       \node[text=white,anchor=west,scale=1.5,inner sep=0pt] at
@@ -248,17 +222,22 @@
       {\textbookname:\ \@textbook\ (\@textbookauthor\ \@textbookversion)};
       %
       % \draw[gray,line width=5mm]
-      % ([xshift=2mm,yshift=-1mm]current page.south west) rectangle ([xshift=-2mm,yshift=1mm]current
+      % ([xshift=2mm,yshift=-1mm]current page.south west)
+        rectangle ([xshift=-2mm,yshift=1mm]current
       % page.north east);
     \end{tikzpicture}
     \clearpage\thispagestyle{empty}
     \begin{center}
       \Large\bfseries Declaration
     \end{center}
-    The class file \texttt{mathexercise.cls} for this document is available at my github
-    repository \href{https://github.com/SwitWu/MathExercise}{MathExercise}.
+    The class file \texttt{mathexercise.cls} for this document
+    is available at my github repository
+    \href{https://github.com/SwitWu/MathExercise}{MathExercise}.
     Please report any issues you find in this document to me
     through email or github issues. Fork and pull requests are welcome.
     \clearpage
   }
 \else\fi
+\endinput
+%%
+%% End of file `mathexercise.cls'.
