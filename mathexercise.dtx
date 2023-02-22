@@ -22,7 +22,7 @@
 %<class>\NeedsTeXFormat{LaTeX2e}[2022/12/10]
 %<class>\ProvidesClass{mathexercise}
 %<*class>
-  [2022/12/12 v1.0 class file to write mathematical exercise solutions]
+  [2023/02/22 v1.1 class file to write mathematical exercise solutions]
 %</class>
 
 %<*driver>
@@ -31,6 +31,7 @@
 \usepackage{enumitem}
 \usepackage{mathtools}
 \usepackage{booktabs}
+\usepackage[toc]{multitoc}
 \usepackage[left=4cm]{geometry}
 \setlist{nosep}
 \DeclarePairedDelimiterX{\lrangle}[1]{\langle}{\rangle}{#1}
@@ -51,7 +52,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{349}
+% \CheckSum{348}
 % 
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -70,12 +71,20 @@
 %   Right brace   \}     Tilde         \~}
 % 
 % \changes{v1.0}{2022/12/12}{initial version}
-% 
+% \DoNotIndex{\arabic,\begin,\bfseries,\bigskip,\ccwd,\centering}
+% \DoNotIndex{\chinese,\clearpage,\counterwithin,\ctexset,\CurrentOption}
+% \DoNotIndex{\DeclareMathOperator,\DeclareOption}
+% \DoNotIndex{\def,\definecolor,\dfrac,\draw}
+% \DoNotIndex{\else,\end,\endtrivlist,\ExecuteOptions}
+% \DoNotIndex{\fi,\fill,\gdef,\hfill,\href,\hspace,\huge,\hypersetup}
+% \DoNotIndex{\item,\itshape,\labelsep,\linespread,\linewidth}
+% \DoNotIndex{\LoadClass,\maketitle,\mathop,\mathrm,\medskip}
+% \DoNotIndex{\newcommand,\newcounter}
 % \GetFileInfo{mathexercise.dtx}
 % 
 % \title{\bfseries\cls{mathexercise} 文档类使用手册\thanks{This document
 %   corresponds to \cls{mathexercise}~\fileversion, dated \filedate.}}
-% \author{SiyuWu \\ \texttt{sywumath@gmail.com}}
+% \author{Siyu Wu \\ \texttt{sywumath@gmail.com}}
 % 
 % \maketitle
 %
@@ -126,8 +135,8 @@
 % \DescribeEnv{theorem}
 % 文档类主要提供了下列环境:
 % \begin{description}
-%   \item [\env{exercise}] 此环境接受两个可选参数, 分别为 \oargBracket{integer}
-%     和 \oargAngle{text}. 可选参数 \oargBracket{integer} 将当前题目的题号设置为 \meta{integer},
+%   \item [\env{exercise}] 此环境接受两个可选参数, 分别为 \oarg{integer}
+%     和 \oargAngle{text}. 可选参数 \oarg{integer} 将当前题目的题号设置为 \meta{integer},
 %     且后续题目的题号默认从 $\meta{integer}+1$ 开始增加. 使用可选参数 \oargAngle{text} 将会在题号后面
 %     以加粗字体显示 \meta{text} 并以圆括号将其包裹.
 %   \item [\env{proof}] 证明环境
@@ -216,11 +225,12 @@
 %   \item \pkg{tikz}
 %   \item \pkg{tasks}
 %   \item \pkg{hyperref}
+%   \item \pkg{fixdif} (提供微分算符 \verb|\d|)
 % \end{itemize}
-% 
+% \changes{v1.1}{2023/02/22}{调用 \pkg{fixdif} 包}
 % 如果需要使用其它宏包, 直接在主文件导言区通过 \verb|\usepackage{}| 命令添加即可.
 % 
-% \StopEventually{\PrintIndex}
+% \StopEventually{\PrintChanges\PrintIndex}
 %
 % \section{Source Code}
 % 
@@ -265,6 +275,7 @@
 \RequirePackage{mathtools}
 \RequirePackage{amssymb}
 \RequirePackage{amsthm}
+\RequirePackage{fixdif}
 \RequirePackage{extarrows}
 \RequirePackage{xcolor}
 \RequirePackage{tcolorbox}
