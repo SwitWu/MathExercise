@@ -1,13 +1,13 @@
-# `mathexercise.cls`
+## `mathexercise.cls`
 
-## 用法
+### 用法
 
-见 `documentation.pdf`
+见手册 `mathexercise.pdf`
 
-## 协议
+### 协议
 
 LPPL 1.3c or later version
 
-## 参考资料与致谢
+### 参考资料与致谢
 
 - `withinchap` 和 `withinsec` 的选项制作参考 [MSE](https://tex.stackexchange.com/questions/632017/define-own-class-options-relating-to-counter)，向 egreg 表示感谢。
