@@ -2,5 +2,6 @@
 *.log
 *.out
 *.pdf
+!documentation.pdf
 *.synctex.gz
 *.sh
